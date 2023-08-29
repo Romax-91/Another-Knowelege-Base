@@ -162,36 +162,6 @@
 			"name": "Пользователи",
 			"item": [
 				{
-					"name": "Все пользователи",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Добавить",
 					"event": [
 						{
@@ -202,9 +172,13 @@
 									"\r",
 									"if (s ===200) {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    if(jsonData._id) pm.environment.set(\"user_id\", r._id);\r",
+									"    console.log('jsonData', jsonData)\r",
+									"    if(jsonData._id) pm.environment.set(\"user_id\", jsonData._id);\r",
 									"\r",
-									"}"
+									"}\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -215,7 +189,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"test@mail.com\",\r\n    \"password\": \"123456\",\r\n    \"name\": {\r\n        \"first\": \"Иван\",\r\n        \"last\": \"Иванов\",\r\n        \"middle\":\"Иванович\"\r\n    }    \r\n}",
+							"raw": "{\r\n    \"email\": \"test6@mail.com\",\r\n    \"password\": \"123456\",\r\n    \"name\": {\r\n        \"first\": \"Иван\",\r\n        \"last\": \"Иванов\",\r\n        \"middle\":\"Иванович\"\r\n    }    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -236,6 +210,19 @@
 				},
 				{
 					"name": "Получить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -260,9 +247,31 @@
 				},
 				{
 					"name": "Изменить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test655@mail.com\",\r\n    \"password\": \"64648646\",\r\n    \"name\": {\r\n        \"first\": \"Иван\",\r\n        \"last\": \"Иванов\",\r\n        \"middle\":\"Иванович\"\r\n    }    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}/user/:id",
 							"host": [
@@ -284,6 +293,19 @@
 				},
 				{
 					"name": "Удалить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],

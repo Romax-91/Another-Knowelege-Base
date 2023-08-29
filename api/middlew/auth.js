@@ -25,6 +25,7 @@ module.exports = function (req, res, next) {
 		if (!user) return next();
 
 		// Записываем все о пользователе
+		user.auth = true;
 		req.info.user = { ...user };
 		next();
 	} catch (e) {

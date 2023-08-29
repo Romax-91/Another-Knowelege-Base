@@ -1,4 +1,4 @@
-const ApiError = require('@exceptions/api-error');
+const ApiError = require('../exceptions/api-error');
 
 /**
  * Проверка авторизации пользователя
@@ -11,6 +11,7 @@ function auth() {
 			if (req?.info?.user?.auth) return next();
 			return next(ApiError.Unauthorized(3));
 		} catch (e) {
+			console.error(e);
 			return next(ApiError.Unauthorized(4));
 		}
 	};

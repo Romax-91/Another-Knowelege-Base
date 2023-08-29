@@ -27,8 +27,7 @@ function App(db) {
 	app.use(authMiddleW);
 	if (db) {
 		app.use('/auth', auth(db));
-		app.use('/user', user(db));
-		// app.use('/users', auth(db));
+		app.use(user(db));
 		// app.use('/posts', auth(db));
 		// app.use('/post', auth(db));
 		// app.use('/tags', auth(db));

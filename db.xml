@@ -69,6 +69,10 @@
 <datatype>DATETIME</datatype>
 <default>NULL</default><comment>Дата создания</comment>
 </row>
+<row name="update" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default><comment>Дата последнего изменения</comment>
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
