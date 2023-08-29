@@ -1,0 +1,722 @@
+{
+	"info": {
+		"_postman_id": "cc2614df-f685-4280-818d-8cd056d8b535",
+		"name": "Another Knowelege Base",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16548060",
+		"_collection_link": "https://planetary-escape-446557.postman.co/workspace/Flet.api~4efc2da3-cc41-4014-8998-96956c394470/collection/16548060-cc2614df-f685-4280-818d-8cd056d8b535?action=share&source=collection_link&creator=16548060"
+	},
+	"item": [
+		{
+			"name": "Авторизация",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    \r",
+									"    const r = pm.response.json();\r",
+									"    \r",
+									"    if(r.accessToken) pm.environment.set(\"accessToken\", r.accessToken);\r",
+									"    if(r.refreshToken) pm.environment.set(\"refreshToken\", r.refreshToken);\r",
+									"    if(r.user?.id) pm.environment.set(\"user_id\", r.user.id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"root@mail.com\",\r\n    \"password\": \"123456789\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Refresh is OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    \r",
+									"    const r = pm.response.json();\r",
+									"    if(r.accessToken) pm.environment.set(\"accessToken\", r.accessToken);\r",
+									"    if(r.refreshToken) pm.environment.set(\"refreshToken\", r.refreshToken);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"{{refreshToken}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/refresh",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Logout is OK\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql('ok');\r",
+									"    \r",
+									"    pm.environment.set(\"accessToken\", \"\");\r",
+									"    pm.environment.set(\"refreshToken\", \"\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"{{refreshToken}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Пользователи",
+			"item": [
+				{
+					"name": "Все пользователи",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Добавить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const s = pm.response.code\r",
+									"\r",
+									"if (s ===200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    if(jsonData._id) pm.environment.set(\"user_id\", r._id);\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@mail.com\",\r\n    \"password\": \"123456\",\r\n    \"name\": {\r\n        \"first\": \"Иван\",\r\n        \"last\": \"Иванов\",\r\n        \"middle\":\"Иванович\"\r\n    }    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Изменить",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удалить",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Статья",
+			"item": [
+				{
+					"name": "Добавить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const s = pm.response.code\r",
+									"\r",
+									"if (s ===200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    if(jsonData._id) pm.environment.set(\"post_id\", r._id);\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Новая статья\",\r\n    \"text\": \"<p>Есть над чем задуматься: активно развивающиеся страны третьего мира представляют собой не что иное, как квинтэссенцию победы маркетинга над     разумом и должны быть обнародованы. Как уже неоднократно упомянуто, многие известные личности объявлены нарушающими общечеловеческие нормы этики и морали.</p> <p>В целом, конечно, постоянный количественный рост и сфера нашей активности играет определяющее значение для вывода текущих активов. А также акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — ассоциативно распределены по отраслям. Сложно сказать, почему активно развивающиеся страны третьего мира функционально разнесены на независимые элементы.</p><p>А также интерактивные прототипы освещают чрезвычайно интересные особенности картины в целом, однако конкретные выводы, разумеется, обнародованы. А также предприниматели в сети интернет представляют собой не что иное, как квинтэссенцию победы маркетинга над разумом и должны быть преданы социально-демократической анафеме.</p>\",\r\n    \"tags\" : [ 1,2,3 ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Изменить",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удалить",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Статьи",
+			"item": [
+				{
+					"name": "Получить весь список",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить по странично",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить с фильтрацией по тегам",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts?tags=[\"new\", ]",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "[\"new\", ]"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Теги",
+			"item": [
+				{
+					"name": "Добавить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const s = pm.response.code\r",
+									"\r",
+									"if (s ===200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    if(jsonData._id) pm.environment.set(\"tag_id\", r._id);\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Хобби\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/tag",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tag/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tag",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Изменить",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tag/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tag",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удалить",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tag/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tag",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Все",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tags",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Множественное добавление",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"list\": [\r\n        \"Семья\",\r\n        \"Работа\",\r\n        \"Тренировка\",\r\n        \"Здоровье\",\r\n        \"Дом\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/tag",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tag"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const s = pm.response.code",
+					"",
+					"// Скрип для рефреша токена Выполняется всегда в случае 401 ошибки",
+					"if (s ===401) refresh()",
+					"",
+					"// рефреша токена",
+					"function refresh(){",
+					"    const url = pm.environment.get(\"url\");",
+					"    const refreshToken = pm.environment.get(\"refreshToken\");",
+					"",
+					"    pm.sendRequest({",
+					"        url: url+'/auth/refresh',",
+					"        method: 'post',",
+					"",
+					"        header: {",
+					"            'Content-Type': 'multipart/form-data',",
+					"        },",
+					"        body: {",
+					"            mode: 'formdata',",
+					"            formdata : [",
+					"                { key: 'refreshToken', value: refreshToken},",
+					"                { key: 'type', value: type},",
+					"            ]",
+					"        }",
+					"",
+					"    }, function(err, res){",
+					"        if(res){",
+					"            const r = res.json()",
+					"            if(r.accessToken) pm.environment.set(\"accessToken\", r.accessToken);",
+					"            if(r.refreshToken) pm.environment.set(\"refreshToken\", r.refreshToken);",
+					"        }",
+					"        ",
+					"    })",
+					"}",
+					"",
+					""
+				]
+			}
+		}
+	]
+}

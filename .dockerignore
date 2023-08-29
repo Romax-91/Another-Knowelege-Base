@@ -1,0 +1,33 @@
+db.xml
+.git
+.vscode
+.dockerignore
+.gitignore
+.env
+.env.dev
+.env.prod
+config
+build
+node_modules
+/node_modules
+node_modules/
+temp
+temp/
+docker-compose.yml
+docker-compose-dev.yml
+docker-compose-prod.yml
+docker-compose.dev.yaml
+docker-compose.prod.yaml
+docker-compose.yaml
+Dockerfile
+Dockerfile.dev
+Dockerfile.prod
+Makefile
+README.md
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# testing
+/coverage
+# production
+/build

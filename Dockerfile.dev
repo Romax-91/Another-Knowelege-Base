@@ -1,0 +1,16 @@
+FROM node:18-alpine
+ENV NODE_ENV=development
+
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY package.json .
+RUN npm install
+
+COPY ./api ./api
+
+RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+
+RUN apk add mongodb-tools
+
+CMD ["npm", "run", "dev"]

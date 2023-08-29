@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"baseUrl": "./api",
+	  	"paths": {
+			"@root/*": ["/*"],
+			"@middlew/*": ["./api/middlew/*"],
+			"@service/*": ["./api/service/*"],
+			"@exceptions/*": ["./api/exceptions/*"],
+		}
+	}
+}
