@@ -2,6 +2,7 @@
 
 backend сервис "Another Knowelege Base"
 
+Схема БД описана в db.xml просмотреть можно на сайте https://sql.toad.cz/?  -> "Сохранить/Загрузить"->Скопировать содержимое файла и вставить в поле "Ввод/вывод"->"Загрузить XML"
 Импортируйте Настройки Postman 
 ```
 	-    Another Knowelege Base.postman_collection.json - Postman Collection v2.1 
