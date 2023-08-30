@@ -1,6 +1,6 @@
+const { ObjectId } = require('mongojs');
 const ApiError = require('./../exceptions/api-error');
 const { validateAccess } = require('./../token-service');
-
 /**
  * Обработка токенa в запросе
  */
@@ -26,9 +26,12 @@ module.exports = function (req, res, next) {
 
 		// Записываем все о пользователе
 		user.auth = true;
-		req.info.user = { ...user };
+		user.id = ObjectId(user.id);
+
+		req.info.user = user;
 		next();
 	} catch (e) {
+		console.log(e);
 		return next(ApiError.Unauthorized(1));
 	}
 };

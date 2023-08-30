@@ -47,7 +47,10 @@ function refresh(db) {
 				);
 			})
 			.then((_) => res.json({ ...newTokens, user: usr }))
-			.catch((_) => next(ApiError.Unauthorized(11)));
+			.catch((_) => {
+				console.log(_);
+				next(ApiError.Unauthorized(11));
+			});
 	};
 }
 

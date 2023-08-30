@@ -15,6 +15,7 @@ function login(db) {
 			const { email, password } = req.body;
 			let usr;
 			let tokens;
+			console.log('Проверка пользователя');
 			// Проверка пользователя
 			user(db, { email })
 				.then((r) => {

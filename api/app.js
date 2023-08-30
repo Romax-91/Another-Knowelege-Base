@@ -8,6 +8,7 @@ const authMiddleW = require('./middlew/auth');
 var indexRouter = require('./routes/index');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
+const posts = require('./routes/posts');
 
 function App(db) {
 	var app = express();
@@ -28,10 +29,8 @@ function App(db) {
 	if (db) {
 		app.use('/auth', auth(db));
 		app.use(user(db));
-		// app.use('/posts', auth(db));
-		// app.use('/post', auth(db));
-		// app.use('/tags', auth(db));
-		// app.use('/tag', auth(db));
+		app.use(posts(db));
+		// app.use(tags(db));
 	}
 
 	// catch 404 and forward to error handler
