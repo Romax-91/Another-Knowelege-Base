@@ -27,28 +27,17 @@ function saveTags(db, postId, tags = []) {
 			if (!tags.length) return resolve();
 
 			const arr = tags.map((el) => {
-				return { tagId: ObjectId(el), postId };
+				return { tagId: ObjectId(el), postId: ObjectId(postId) };
 			});
 
 			db.posts_tags.insertMany(arr, (err, docs) => {
 				if (err) return reject(err);
 				docs = docs.map((el) => el.tagId);
-				return findTags(db, docs);
+				resolve(docs);
 			});
 		} catch (error) {
 			reject(error);
 		}
 	});
 }
-
-function findTags(db, tagsId) {
-	return new Promise((resolve, reject) => {
-		const q = { _id: { $in: tagsId } };
-		db.tags.find(q, (err, docs) => {
-			if (err) return reject(err);
-			return resolve(docs.map((el) => el.name));
-		});
-	});
-}
-
 module.exports = { savePost, saveTags };

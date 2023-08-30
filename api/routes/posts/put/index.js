@@ -1,6 +1,8 @@
 const { ObjectId } = require('mongojs');
 const ApiError = require('./../../../exceptions/api-error');
-const { findOne } = require('../../../tool/db');
+const { saveTags } = require('../post/fn');
+const { getTags } = require('../get/fn');
+const { delTags } = require('../del/fn');
 
 function put(db) {
 	return function (req, res, next) {
@@ -18,27 +20,29 @@ function put(db) {
 				return data.tags
 					? saveTags(db, id, data.tags)
 					: Promise.resolve();
-			}).then((tags = []) => {
-				delete data.tags;
-				data.update = new Date();
-				const query = {
-					_id: ObjectId(id),
-				};
-				db.posts.findAndModify(
-					{
-						query,
-						update: { $set: data },
-						new: true,
-					},
-					(err, doc) => {
-						if (err) return next(ApiError.BadRequest(err));
-						doc.tags = tags;
-						res.json(doc);
-					}
-				);
-			});
+			})
+				.then((_) => getTags(db, id))
+				.then((tags) => {
+					delete data.tags;
+					data.update = new Date();
+					const query = {
+						_id: ObjectId(id),
+					};
+					db.posts.findAndModify(
+						{
+							query,
+							update: { $set: data },
+							new: true,
+						},
+						(err, doc) => {
+							if (err) return next(ApiError.BadRequest(err));
+							doc.tags = tags;
+							res.json(doc);
+						}
+					);
+				});
 		} catch (error) {
-			next(ApiError.BadRequest(err));
+			next(ApiError.BadRequest(error));
 		}
 	};
 }

@@ -1,6 +1,7 @@
 const ApiError = require('./../../../exceptions/api-error');
 const { ObjectId } = require('mongojs');
 const { savePost, saveTags } = require('./fn');
+const { getTags } = require('../get/fn');
 
 function post(db) {
 	return function (req, res, next) {
@@ -23,7 +24,8 @@ function post(db) {
 				obj = r;
 				return saveTags(db, r._id, data.tags);
 			})
-			.then((r = []) => {
+			.then((_) => getTags(db, obj._id))
+			.then((r) => {
 				obj.tags = r;
 				res.json(obj);
 			})

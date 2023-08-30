@@ -5,6 +5,7 @@ const post = require('./post');
 const get = require('./get');
 const put = require('./put');
 const del = require('./del');
+const all = require('./all');
 
 /**
  * Статьи
@@ -12,7 +13,7 @@ const del = require('./del');
  * @param {*} db
  */
 function posts(db) {
-	// router.get('/posts', posts(db));
+	router.get('/posts', all(db));
 	router.get('/post/:id', get(db));
 
 	router.route('/post').all(isAuth()).post(post(db));

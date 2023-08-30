@@ -24,4 +24,24 @@ function findOne(db, collection, val, field = '_id') {
 	});
 }
 
-module.exports = { findOne };
+/**
+ * Поиск всех документов
+ * @param {Object} db
+ * @param {String} collection
+ * @param {Object} q Параметры поиска
+ * @returns
+ */
+function find(db, collection, q = {}) {
+	return new Promise((resolve, reject) => {
+		try {
+			if (!collection) return resolve(null);
+			db[collection].find(q, (err, docs) =>
+				err ? reject(err) : resolve(docs)
+			);
+		} catch (error) {
+			reject(error);
+		}
+	});
+}
+
+module.exports = { findOne, find };

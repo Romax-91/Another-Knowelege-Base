@@ -172,7 +172,6 @@
 									"\r",
 									"if (s ===200) {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    console.log('jsonData', jsonData)\r",
 									"    if(jsonData._id) pm.environment.set(\"user_id\", jsonData._id);\r",
 									"\r",
 									"}\r",
@@ -331,6 +330,209 @@
 			]
 		},
 		{
+			"name": "Теги",
+			"item": [
+				{
+					"name": "Добавить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const s = pm.response.code\r",
+									"\r",
+									"\r",
+									"if (s ===200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    if(jsonData._id) pm.environment.set(\"tag_id\", jsonData._id);\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Хобби\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/tags",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tags/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Изменить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Helth\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/tags/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удалить",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tags/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Все",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tags",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Статья",
 			"item": [
 				{
@@ -344,9 +546,13 @@
 									"\r",
 									"if (s ===200) {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    if(jsonData._id) pm.environment.set(\"post_id\", r._id);\r",
+									"    if(jsonData._id) pm.environment.set(\"post_id\", jsonData._id);\r",
 									"\r",
-									"}"
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -357,7 +563,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"Новая статья\",\r\n    \"text\": \"<p>Есть над чем задуматься: активно развивающиеся страны третьего мира представляют собой не что иное, как квинтэссенцию победы маркетинга над     разумом и должны быть обнародованы. Как уже неоднократно упомянуто, многие известные личности объявлены нарушающими общечеловеческие нормы этики и морали.</p> <p>В целом, конечно, постоянный количественный рост и сфера нашей активности играет определяющее значение для вывода текущих активов. А также акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — ассоциативно распределены по отраслям. Сложно сказать, почему активно развивающиеся страны третьего мира функционально разнесены на независимые элементы.</p><p>А также интерактивные прототипы освещают чрезвычайно интересные особенности картины в целом, однако конкретные выводы, разумеется, обнародованы. А также предприниматели в сети интернет представляют собой не что иное, как квинтэссенцию победы маркетинга над разумом и должны быть преданы социально-демократической анафеме.</p>\",\r\n    \"tags\" : [ 1,2,3 ]\r\n}",
+							"raw": "{\r\n    \"title\":\"Новая статья\",\r\n    \"private\": true,\r\n    \"text\": \"<p>Есть над чем задуматься: активно развивающиеся страны третьего мира представляют собой не что иное, как квинтэссенцию победы маркетинга над     разумом и должны быть обнародованы. Как уже неоднократно упомянуто, многие известные личности объявлены нарушающими общечеловеческие нормы этики и морали.</p> <p>В целом, конечно, постоянный количественный рост и сфера нашей активности играет определяющее значение для вывода текущих активов. А также акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — ассоциативно распределены по отраслям. Сложно сказать, почему активно развивающиеся страны третьего мира функционально разнесены на независимые элементы.</p><p>А также интерактивные прототипы освещают чрезвычайно интересные особенности картины в целом, однако конкретные выводы, разумеется, обнародованы. А также предприниматели в сети интернет представляют собой не что иное, как квинтэссенцию победы маркетинга над разумом и должны быть преданы социально-демократической анафеме.</p>\",\r\n    \"tags\": [\"{{tag_id}}\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -405,141 +611,9 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
-						"url": {
-							"raw": "{{url}}/post/:id",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"post",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "{{post_id}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Удалить",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/post/:id",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"post",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "{{post_id}}"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Статьи",
-			"item": [
-				{
-					"name": "Получить весь список",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Получить по странично",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Получить с фильтрацией по тегам",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts?tags=[\"new\", ]",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							],
-							"query": [
-								{
-									"key": "tags",
-									"value": "[\"new\", ]"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Теги",
-			"item": [
-				{
-					"name": "Добавить",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const s = pm.response.code\r",
-									"\r",
-									"if (s ===200) {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    if(jsonData._id) pm.environment.set(\"tag_id\", r._id);\r",
-									"\r",
-									"}"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Хобби\"\r\n}",
+							"raw": "{\r\n    \"title\":\"Новая статья1\",\r\n    \"private\": false,\r\n    \"tags\": [\"64ef04edb640cf5170f2398d\", \"64ef04f7b640cf5170f2398e\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -547,59 +621,18 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/tag",
+							"raw": "{{url}}/post/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"tag"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Получить",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/tag/:id",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"tag",
+								"post",
 								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "{{tag_id}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Изменить",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/tag/:id",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"tag",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "{{tag_id}}"
+									"value": "{{post_id}}"
 								}
 							]
 						}
@@ -612,18 +645,18 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/tag/:id",
+							"raw": "{{url}}/post/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"tag",
+								"post",
 								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "{{tag_id}}"
+									"value": "{{post_id}}"
 								}
 							]
 						}
@@ -631,43 +664,31 @@
 					"response": []
 				},
 				{
-					"name": "Все",
+					"name": "Список с фильтрацией",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/tags",
+							"raw": "{{url}}/posts",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"tags"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Множественное добавление",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"list\": [\r\n        \"Семья\",\r\n        \"Работа\",\r\n        \"Тренировка\",\r\n        \"Здоровье\",\r\n        \"Дом\"\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+								"posts"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "[\"64ef04f7b640cf5170f2398e\"]",
+									"description": "Фильтрация по id тегов",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "По страничное отображение",
+									"disabled": true
 								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/tag",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"tag"
 							]
 						}
 					},
@@ -710,25 +731,26 @@
 					"function refresh(){",
 					"    const url = pm.environment.get(\"url\");",
 					"    const refreshToken = pm.environment.get(\"refreshToken\");",
-					"",
+					"    if(!refreshToken)",
+					"        return console.log(\"Не получен refreshToken\")",
 					"    pm.sendRequest({",
 					"        url: url+'/auth/refresh',",
 					"        method: 'post',",
 					"",
 					"        header: {",
-					"            'Content-Type': 'multipart/form-data',",
+					"            'Content-Type': 'application/x-www-form-urlencoded',",
 					"        },",
 					"        body: {",
-					"            mode: 'formdata',",
-					"            formdata : [",
+					"            mode: 'urlencoded',",
+					"            urlencoded : [",
 					"                { key: 'refreshToken', value: refreshToken},",
-					"                { key: 'type', value: type},",
 					"            ]",
 					"        }",
 					"",
 					"    }, function(err, res){",
 					"        if(res){",
 					"            const r = res.json()",
+					"            console.log(r)",
 					"            if(r.accessToken) pm.environment.set(\"accessToken\", r.accessToken);",
 					"            if(r.refreshToken) pm.environment.set(\"refreshToken\", r.refreshToken);",
 					"        }",
