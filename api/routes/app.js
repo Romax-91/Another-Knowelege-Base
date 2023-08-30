@@ -9,7 +9,6 @@ var indexRouter = require('./routes/index');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
 const posts = require('./routes/posts');
-const tags = require('./routes/tags');
 
 function App(db) {
 	var app = express();
