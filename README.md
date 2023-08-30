@@ -3,21 +3,25 @@
 backend сервис "Another Knowelege Base"
 
 Импортируйте Настройки Postman 
+```
 	-    Another Knowelege Base.postman_collection.json - Postman Collection v2.1 
 	-    AnotherKnowelegeBase.postman_environment - Postman Environment
+```
 
 Варианты запуска:
 
-1. запуска в Docker
+1. запуск в DockerCompose
+```
+	cd Another-Knowelege-Base
+	docker-compose -f .\docker-compose-dev.yml up --build
+```
 
-    cd Another-Knowelege-Base
-    docker-compose -f .\docker-compose-dev.yml up --build
-
-2. запуска в node.js + mongoDB - предполагается что установлена и доступна по 127.0.0.1:27017/knowelege
-
-    cd Another-Knowelege-Base
-    npm i
-    npm start
+2. запуск в node.js + mongoDB - предполагается что установлена и доступна по 127.0.0.1:27017/knowelege
+```
+	cd Another-Knowelege-Base
+    	npm i
+    	npm start
+```
 
 Тестовое задание
 
